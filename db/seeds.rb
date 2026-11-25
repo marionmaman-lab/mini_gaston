@@ -1,5 +1,3 @@
-abort "Seeds allowed only in development" unless Rails.env.development?
-
 puts "Cleaning database..."
 
 Message.destroy_all

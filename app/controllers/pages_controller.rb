@@ -4,4 +4,8 @@ class PagesController < ApplicationController
   def home
     @recipes = Recipe.all
   end
+
+  def dashboard
+    @recipes = Recipe.all
+  end
 end

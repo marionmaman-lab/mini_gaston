@@ -1,3 +1,13 @@
+puts "Cleaning database..."
+
+Message.destroy_all
+Recipe.destroy_all
+Chat.destroy_all
+User.destroy_all
+
+puts "Database cleaned!"
+
+
 puts "Creating users..."
 
 natacha = User.create!(
@@ -49,7 +59,7 @@ raclette = Recipe.create!(
 4. Faire fondre le fromage dans l'appareil à raclette.
 5. Servir avec les pommes de terre et les cornichons.",
   duration_in_minutes: 40,
-  dificulty: "Facile",
+  difficulty: "Facile",
   servings: 4
 )
 
@@ -65,7 +75,7 @@ carbonara = Recipe.create!(
 5. Mélanger les pâtes avec le guanciale et la préparation aux œufs hors du feu.
 6. Servir immédiatement.",
   duration_in_minutes: 25,
-  dificulty: "Moyen",
+  difficulty: "Moyen",
   servings: 4
 )
 
@@ -82,7 +92,7 @@ curry = Recipe.create!(
 6. Faire cuire le riz.
 7. Servir le poulet au curry accompagné du riz.",
   duration_in_minutes: 40,
-  dificulty: "Facile",
+  difficulty: "Facile",
   servings: 4
 )
 
@@ -99,7 +109,7 @@ fondant = Recipe.create!(
 6. Enfourner pendant 12 minutes.
 7. Laisser tiédir avant de servir.",
   duration_in_minutes: 27,
-  dificulty: "Moyen",
+  difficulty: "Moyen",
   servings: 4
 )
 

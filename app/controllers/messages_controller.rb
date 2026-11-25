@@ -14,18 +14,19 @@ class MessagesController < ApplicationController
     @message.chat = @chat
     @message.role = "user"
 
+
     if @message.save
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
 
-      response = @ruby_llm_chat.with_instructions(SYSTEM_PROMPT).ask(@message.content)
+      response = @ruby_llm_chat.with_instructions(instructions).ask(@message.content)
 
       Message.create!(
         role: "assistant",
         content: response.content,
         chat: @chat
       )
-
+      @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
     else
       render "chats/show", status: :unprocessable_entity
@@ -38,6 +39,14 @@ class MessagesController < ApplicationController
     @chat.messages.where.not(id: @message.id).order(:created_at).each do |message|
       @ruby_llm_chat.add_message(role: message.role, content: message.content)
     end
+  end
+
+  def user_context
+    "L'utilisateur s'appelle #{current_user.first_name}."
+  end
+
+  def instructions
+    [SYSTEM_PROMPT, user_context].compact.join("\n\n")
   end
 
   def message_params

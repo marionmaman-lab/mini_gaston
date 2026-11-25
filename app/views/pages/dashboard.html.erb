@@ -1,0 +1,59 @@
+
+<div class="dashboard-page">
+
+  <!-- HEADER -->
+  <header class="dashboard-header">
+    <div>
+      <span>🍃 MINI GASTON</span>
+      <h1>Bienvenue dans votre espace cuisine !</h1>
+      <p>Votre assistant culinaire et votre bibliothèque de recettes.</p>
+    </div>
+
+    <%= link_to "Se déconnecter",
+        destroy_user_session_path,
+        data: { turbo_method: :delete } %>
+  </header>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="dashboard-layout">
+
+    <!-- CHAT -->
+    <section class="dashboard-chat">
+      <h2>💬 Mon assistant culinaire</h2>
+      <p>Posez vos questions à Mini Gaston.</p>
+
+      <div class="chat-placeholder">
+        <p>Bonjour ! 👋</p>
+        <p>Que souhaitez-vous cuisiner aujourd'hui ?</p>
+      </div>
+
+    <%= button_to "Nouvelle conversation", chats_path, class: "btn btn-dark my-4" %>
+    </section>
+
+    <!-- BIBLIOTHÈQUE -->
+    <section class="dashboard-recipes">
+      <h2>📚 Ma bibliothèque de recettes</h2>
+
+      <div class="dashboard-recipe-list">
+
+        <% @recipes.each do |recipe| %>
+
+          <article class="dashboard-recipe-card">
+            <h3><%= recipe.title %></h3>
+
+            <p>
+              ⏱️ <%= recipe.duration_in_minutes %> min
+              · 👥 <%= recipe.servings %> personnes
+            </p>
+
+            <%= link_to "Voir la recette", recipe_path(recipe) %>
+          </article>
+
+        <% end %>
+
+      </div>
+    </section>
+
+  </main>
+
+</div>

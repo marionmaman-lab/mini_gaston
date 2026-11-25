@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <h1>Bonjour <%= current_user.first_name %> !</h1>
+  <p class="text-muted">Qu'est-ce qu'on cuisine aujourd'hui ?</p>
+
+  <%= button_to "Nouvelle conversation", chats_path, class: "btn btn-dark my-4" %>
+
+  <h2 class="h5">Mes conversations</h2>
+
+  <% if @chats.any? %>
+    <ul class="list-group">
+      <% @chats.each do |chat| %>
+        <li class="list-group-item">
+          <%= link_to chat.title, chat_path(chat) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Pas encore de conversation. Lance-toi !</p>
+  <% end %>
+</div>

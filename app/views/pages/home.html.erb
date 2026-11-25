@@ -1,2 +1,93 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+
+<div class="recipes-page">
+
+  <!-- HERO : présentation de l'application -->
+  <section class="recipes-hero">
+    <div class="hero-content">
+      <span class="hero-label">🍃 BIENVENUE CHEZ MINI GASTON</span>
+
+      <h1>La cuisine,<br>c'est tout un <span>plaisir.</span></h1>
+
+      <p>Découvrez des recettes gourmandes, partagez vos idées et trouvez l'inspiration pour vos prochains repas.</p>
+
+      <a href="#recipe-list" class="hero-button">
+        Découvrir les recettes ↓
+      </a>
+    </div>
+
+    <div class="hero-decoration">
+      <span>🥑</span>
+      <span>🍅</span>
+      <span>🥕</span>
+      <div class="hero-circle">👨‍🍳</div>
+    </div>
+  </section>
+
+  <!-- SECTION DES RECETTES -->
+  <section class="recipe-section" id="recipe-list">
+
+    <div class="section-heading">
+      <div>
+        <span class="section-label">NOTRE SÉLECTION</span>
+        <h2>Les recettes du moment</h2>
+        <p>De bonnes idées pour se régaler au quotidien.</p>
+      </div>
+
+      <div class="recipe-count">
+        <%= @recipes.count %> recettes
+      </div>
+    </div>
+
+    <!-- AFFICHAGE DES RECETTES -->
+    <% if @recipes.any? %>
+
+      <div class="recipes-grid">
+
+        <% @recipes.each do |recipe| %>
+
+          <article class="recipe-card">
+
+            <div class="recipe-card-top">
+              <span class="recipe-emoji">🍽️</span>
+              <span class="difficulty-badge">
+                <%= recipe.difficulty.presence || "À découvrir" %>
+              </span>
+            </div>
+
+            <div class="recipe-card-content">
+
+              <h3><%= recipe.title %></h3>
+
+              <p class="recipe-description">
+                <%= truncate(recipe.ingredients, length: 100) %>
+              </p>
+
+              <div class="recipe-infos">
+                <span>⏱️ <%= recipe.duration_in_minutes %> min</span>
+                <span>👥 <%= recipe.servings %> pers.</span>
+              </div>
+
+              <%= link_to "Découvrir la recette →",
+                  recipe_path(recipe),
+                  class: "recipe-link" %>
+
+            </div>
+          </article>
+
+        <% end %>
+
+      </div>
+
+    <% else %>
+
+      <div class="empty-recipes">
+        <span>🥗</span>
+        <h3>Pas encore de recettes !</h3>
+        <p>Les premières recettes arriveront bientôt.</p>
+      </div>
+
+    <% end %>
+
+  </section>
+
+</div>

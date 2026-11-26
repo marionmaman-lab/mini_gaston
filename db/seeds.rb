@@ -23,6 +23,14 @@ anouar = User.create!(
   password: "password123"
 )
 
+
+guest = User.create!(
+  first_name: "Guest",
+  last_name: "Mini Gaston",
+  email: "guest@minigaston.example",
+  password: SecureRandom.hex(32)
+)
+
 puts "Creating chats..."
 
 chat_raclette = Chat.create!(
@@ -44,6 +52,13 @@ chat_fondant = Chat.create!(
   user: natacha,
   title: "Préparer un dessert au chocolat"
 )
+
+
+chat_guest = Chat.create!(
+  user: guest,
+  title: "Découvrir les recettes Mini Gaston"
+)
+
 
 puts "Creating recipes..."
 
@@ -119,6 +134,22 @@ Recipe.create!(
   difficulty: "Moyen",
   servings: 4
 )
+
+
+puts "Creating Guest demonstration recipes..."
+
+natacha.recipes.each do |recipe|
+  Recipe.create!(
+    user: guest,
+    chat: chat_guest,
+    title: recipe.title,
+    ingredients: recipe.ingredients,
+    steps: recipe.steps,
+    duration_in_minutes: recipe.duration_in_minutes,
+    difficulty: recipe.difficulty,
+    servings: recipe.servings
+  )
+end
 
 puts "Seeds completed!"
 puts "#{User.count} users created"

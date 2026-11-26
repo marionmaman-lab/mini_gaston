@@ -8,10 +8,6 @@
       <h1>Bienvenue dans votre espace cuisine !</h1>
       <p>Votre assistant culinaire et votre bibliothèque de recettes.</p>
     </div>
-
-    <%= link_to "Se déconnecter",
-        destroy_user_session_path,
-        data: { turbo_method: :delete } %>
   </header>
 
   <!-- CONTENU PRINCIPAL -->
@@ -27,7 +23,7 @@
         <p>Que souhaitez-vous cuisiner aujourd'hui ?</p>
       </div>
 
-    <%= button_to "Nouvelle conversation", chats_path, class: "btn btn-dark my-4" %>
+    <%= button_to "Nouvelle conversation", chats_path, class: "dashboard-new-chat-button" %>
     </section>
 
     <!-- BIBLIOTHÈQUE -->

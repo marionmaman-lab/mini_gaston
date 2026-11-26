@@ -41,6 +41,15 @@
       <h1 id="chat_title" class="h4 mb-4"><%= @chat.title %></h1>
 
       <div id="messages" class="flex-grow-1">
+
+        <% if @chat.messages.empty? %>
+          <div class="chat-welcome">
+            <span>👋</span>
+            <h2>Bonjour ! Que cuisine-t-on aujourd'hui ?</h2>
+            <p>Dis-moi ce que tu as dans ton frigo, je vais t'aider à trouver une recette.</p>
+          </div>
+        <% end %>
+
         <% @chat.messages.each do |message| %>
           <%= render "messages/message", message: message %>
         <% end %>

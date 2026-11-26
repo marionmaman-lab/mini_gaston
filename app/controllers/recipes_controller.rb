@@ -1,3 +1,4 @@
+
 class RecipesController < ApplicationController
   RECIPE_FIELDS = %w[title ingredients steps duration_in_minutes difficulty servings].freeze
 
@@ -22,7 +23,7 @@ class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[show]
 
   def index
-    @recipes = Recipe.all
+    @recipes = visible_recipes
   end
 
   def show
@@ -54,11 +55,19 @@ class RecipesController < ApplicationController
 
   private
 
-  def set_recipe
-    @recipe = Recipe.find(params[:id])
+  def visible_recipes
+    if user_signed_in?
+      current_user.recipes
+    else
+      guest_user.recipes
+    end
   end
 
-  def recipe_params
-    params.require(:recipe).permit(:title, :ingredients, :instructions, :prep_time, :chat_id)
+  def guest_user
+    User.find_by!(email: "guest@minigaston.example")
+  end
+
+  def set_recipe
+    @recipe = visible_recipes.find(params[:id])
   end
 end

@@ -1,0 +1,9 @@
+<%= simple_form_for [chat, message] do |f| %>
+  <div class="d-flex align-items-center border rounded-pill px-3 py-2">
+    <i class="fa-solid fa-magnifying-glass text-muted me-2"></i>
+    <%= f.input_field :content, as: :string,
+          class: "form-control border-0 shadow-none p-0",
+          placeholder: "Quels ingrédients as-tu dans ton frigo ?",
+          autocomplete: "off" %>
+  </div>
+<% end %>

@@ -1,0 +1,31 @@
+<% if message.role == "user" %>
+  <div class="d-flex flex-column align-items-end mb-3">
+    <div class="bg-primary-subtle px-3 py-2 rounded-3" style="max-width: 60%;">
+      <%= message.content %>
+    </div>
+    <small class="text-muted mt-1">
+      <%= message.created_at.strftime("%H:%M") %> <i class="fa-solid fa-check"></i>
+    </small>
+  </div>
+<% else %>
+  <div class="d-flex align-items-end gap-2 mb-3">
+    <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center"
+         style="width: 32px; height: 32px; flex-shrink: 0;">
+      <i class="fa-solid fa-user fa-xs"></i>
+    </div>
+    <div style="max-width: 70%;">
+      <div class="bg-light px-3 py-2 rounded-3">
+        <%= sanitize(render_markdown(message.content)) %>
+        <% if chat.recipe %>
+          <%= link_to "Voir dans ma bibliothèque", recipe_path(chat.recipe) %>
+        <% else %>
+          <%= button_to "Enregistrer dans ma bibliothèque",
+                chat_recipes_path(chat),
+                  params: { message_id: message.id },
+                  class: "btn btn-sm btn-outline-dark mt-2" %>
+        <% end %>
+      </div>
+      <small class="text-muted"><%= message.created_at.strftime("%H:%M") %></small>
+    </div>
+  </div>
+<% end %>

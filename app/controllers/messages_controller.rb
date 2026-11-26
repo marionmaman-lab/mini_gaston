@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
     Tu es Mini-Gaston, un chef cuisinier bienveillant.
     L'utilisateur te donne les ingrédients de son frigo.
     Propose 1 recette.
-    Pour chaque recette : titre, temps, difficulté, nombre de portions,
+    Pour cette recette : titre, temps, difficulté, nombre de portions,
     ingrédients avec quantités et étapes.
     Réponds en français, en Markdown.
   PROMPT
@@ -14,29 +14,33 @@ class MessagesController < ApplicationController
     @message.chat = @chat
     @message.role = "user"
 
-
     if @message.save
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
-
       response = @ruby_llm_chat.with_instructions(instructions).ask(@message.content)
-
-      Message.create!(
-        role: "assistant",
-        content: response.content,
-        chat: @chat
-      )
+      @assistant_message = Message.create(role: "assistant", content: response.content, chat: @chat)
       @chat.generate_title_from_first_message
-      redirect_to chat_path(@chat)
+
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to chat_path(@chat) }
+      end
     else
-      render "chats/show", status: :unprocessable_entity
+      @chats = current_user.chats.order(created_at: :desc)
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update("new_message_container",
+            partial: "messages/form", locals: { chat: @chat, message: @message })
+        end
+        format.html { render "chats/show", status: :unprocessable_entity }
+      end
     end
   end
 
   private
 
   def build_conversation_history
-    @chat.messages.where.not(id: @message.id).order(:created_at).each do |message|
+    @chat.messages.where.not(id: @message.id).each do |message|
       @ruby_llm_chat.add_message(role: message.role, content: message.content)
     end
   end

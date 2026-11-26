@@ -1,67 +1,72 @@
-<div class="chat-page">
+<div class="container-fluid" data-controller="toggle">
+  <div class="row" style="min-height: calc(100vh - 70px);">
 
-  <!-- HEADER -->
-  <header class="chat-header">
-    <div>
-      <span class="chat-brand">🍃 MINI GASTON</span>
-      <h1><%= @chat.title %></h1>
-      <p>Votre assistant culinaire est à votre écoute.</p>
+    <!-- HISTORIQUE (à gauche) -->
+    <div class="col-md-3 border-end p-4" data-toggle-target="hideable">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 fw-bold mb-0">
+          Historique <i class="fa-solid fa-clock-rotate-left fs-5"></i>
+        </h2>
+        <button type="button" class="btn btn-light border btn-sm" title="Fermer"
+                data-action="click->toggle#call">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <%= button_to "Nouvelle conversation", chats_path, class: "btn btn-dark btn-sm w-100 mb-3" %>
+
+      <% if @chats.any? %>
+        <ul class="list-unstyled">
+          <% @chats.each do |chat| %>
+            <li class="d-flex justify-content-between align-items-center border-bottom py-3">
+              <div>
+                <%= link_to chat.title, chat_path(chat),
+                      class: "text-decoration-none #{chat == @chat ? 'fw-bold text-dark' : 'text-dark'}" %>
+                <small class="text-muted ms-1">(il y a <%= time_ago_in_words(chat.created_at) %>)</small>
+              </div>
+              <%= button_to chat_path(chat), method: :delete, class: "btn btn-link text-dark p-0",
+                    form: { data: { turbo_confirm: "Supprimer cette conversation ?" } } do %>
+                <i class="fa-solid fa-trash-can"></i>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-muted">Pas encore de conversation.</p>
+      <% end %>
     </div>
 
-    <%= link_to "← Mes conversations", chats_path, class: "chat-back-link" %>
-  </header>
+       <!-- CONVERSATION (à droite) -->
+    <div class="col d-flex flex-column p-4">
+      <h1 id="chat_title" class="h4 mb-4"><%= @chat.title %></h1>
 
-  <!-- CONVERSATION -->
-  <main class="chat-container">
+      <div id="messages" class="flex-grow-1">
 
-    <div class="chat-messages" id="messages">
-
-      <% if @chat.messages.empty? %>
-        <div class="chat-welcome">
-          <span>👋</span>
-          <h2>Bonjour ! Que cuisine-t-on aujourd'hui ?</h2>
-          <p>Dis-moi ce que tu as dans ton frigo, je vais t'aider à trouver une recette.</p>
-        </div>
-      <% end %>
-
-      <% @chat.messages.each do |message| %>
-
-        <% if message.role == "user" %>
-          <div class="message-row user-message">
-            <div class="message-bubble">
-              <%= message.content %>
-            </div>
-          </div>
-        <% else %>
-          <div class="message-row assistant-message">
-            <div class="assistant-avatar">🍃</div>
-            <div class="message-bubble">
-              <%= sanitize(render_markdown(message.content)) %>
-            </div>
+        <% if @chat.messages.empty? %>
+          <div class="chat-welcome">
+            <span>👋</span>
+            <h2>Bonjour ! Que cuisine-t-on aujourd'hui ?</h2>
+            <p>Dis-moi ce que tu as dans ton frigo, je vais t'aider à trouver une recette.</p>
           </div>
         <% end %>
 
-      <% end %>
+        <% @chat.messages.each do |message| %>
+          <%= render "messages/message", message: message %>
+        <% end %>
+      </div>
 
+      <!-- Barre de message + livre -->
+      <div class="d-flex align-items-center gap-3 mt-3">
+        <div id="new_message_container" class="flex-grow-1">
+          <%= render "messages/form", chat: @chat, message: @message %>
+        </div>
+
+        <button type="button" class="btn btn-link text-dark p-0 fs-4" title="Mes conversations"
+                data-action="click->toggle#call">
+          <i class="fa-solid fa-book-open"></i>
+        </button>
+      </div>
     </div>
 
-   <!-- FORMULAIRE -->
-<div class="chat-form-container">
-  <%= simple_form_for [@chat, @message] do |f| %>
-
-    <%= f.input_field :content,
-      as: :text,
-      class: "chat-input",
-      placeholder: "Quels ingrédients as-tu dans ton frigo ?",
-      rows: 2 %>
-
-    <%= f.button :submit, "Envoyer →", class: "chat-send-button" %>
-
-  <% end %>
-</div>
-
-</div>
-
-  </main>
-
+  </div>
 </div>

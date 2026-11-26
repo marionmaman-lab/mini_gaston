@@ -32,7 +32,7 @@
 
       <div class="dashboard-recipe-list">
 
-        <% @recipes.each do |recipe| %>
+        <% @recipes.order(created_at: :desc).first(4).each do |recipe| %>
 
           <article class="dashboard-recipe-card">
             <h3><%= recipe.title %></h3>
@@ -48,6 +48,12 @@
         <% end %>
 
       </div>
+      <% if @recipes.any? %>
+        <%= link_to "Voir toutes mes recettes (#{@recipes.count}) →",
+            recipes_path,
+            class: "dashboard-all-link" %>
+      <% end %>
+
     </section>
 
   </main>

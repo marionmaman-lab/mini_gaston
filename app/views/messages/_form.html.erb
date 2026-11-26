@@ -1,20 +1,16 @@
-<%= form_with model: [chat, message] do |f| %>
+<%= form_with model: [chat, message], class: "chat-message-form" do |f| %>
 
-  <div class="d-flex align-items-center gap-3">
+  <%= f.text_field :content,
+        class: "form-control chat-message-input",
+        placeholder: "Écris ton message...",
+        autocomplete: "off",
+        required: true %>
 
-    <%= f.text_field :content,
-          class: "form-control flex-grow-1",
-          placeholder: "Écris ton message...",
-          autocomplete: "off",
-          required: true %>
-
-    <%= f.button type: "submit",
-          class: "btn btn-dark",
-          title: "Envoyer le message",
-          aria: { label: "Envoyer le message" } do %>
-      <i class="fa-solid fa-paper-plane"></i>
-    <% end %>
-
-  </div>
+  <%= f.button type: "submit",
+        class: "btn btn-dark chat-send-button",
+        title: "Envoyer le message",
+        aria: { label: "Envoyer le message" } do %>
+    <i class="fa-solid fa-paper-plane"></i>
+  <% end %>
 
 <% end %>

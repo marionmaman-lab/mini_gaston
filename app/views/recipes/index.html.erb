@@ -1,0 +1,68 @@
+<div class="recipes-page">
+
+  <section class="recipe-section">
+
+    <div class="section-heading">
+      <div>
+        <span class="section-label">MA BIBLIOTHÈQUE</span>
+        <h2>Toutes mes recettes</h2>
+        <p>Les recettes que vous avez enregistrées avec Mini Gaston.</p>
+      </div>
+
+      <div class="recipe-count">
+        <%= pluralize(@recipes.count, "recette") %>
+      </div>
+    </div>
+
+    <% if @recipes.any? %>
+
+      <div class="recipes-grid">
+
+        <% @recipes.each do |recipe| %>
+
+          <article class="recipe-card">
+
+            <div class="recipe-card-top">
+              <span class="recipe-emoji">🍽️</span>
+              <span class="difficulty-badge">
+                <%= recipe.difficulty.presence || "À découvrir" %>
+              </span>
+            </div>
+
+            <div class="recipe-card-content">
+
+              <h3><%= recipe.title %></h3>
+
+              <p class="recipe-description">
+                <%= truncate(recipe.ingredients, length: 100) %>
+              </p>
+
+              <div class="recipe-infos">
+                <span>⏱️ <%= recipe.duration_in_minutes %> min</span>
+                <span>👥 <%= recipe.servings %> pers.</span>
+              </div>
+
+              <%= link_to "Découvrir la recette →",
+                  recipe_path(recipe),
+                  class: "recipe-link" %>
+
+            </div>
+          </article>
+
+        <% end %>
+
+      </div>
+
+    <% else %>
+
+      <div class="empty-recipes">
+        <span>🥗</span>
+        <h3>Pas encore de recettes !</h3>
+        <p>Discutez avec Mini Gaston puis enregistrez une proposition.</p>
+      </div>
+
+    <% end %>
+
+  </section>
+
+</div>

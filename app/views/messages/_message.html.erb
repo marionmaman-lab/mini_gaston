@@ -16,6 +16,14 @@
     <div style="max-width: 70%;">
       <div class="bg-light px-3 py-2 rounded-3">
         <%= sanitize(render_markdown(message.content)) %>
+        <% if message.chat.recipe %>
+          <%= link_to "Voir dans ma bibliothèque", recipe_path(message.chat.recipe) %>
+        <% else %>
+          <%= button_to "Enregistrer dans ma bibliothèque",
+                chat_recipes_path(message.chat),
+                  params: { message_id: message.id },
+                  class: "btn btn-sm btn-outline-dark mt-2" %>
+        <% end %>
       </div>
       <small class="text-muted"><%= message.created_at.strftime("%H:%M") %></small>
     </div>

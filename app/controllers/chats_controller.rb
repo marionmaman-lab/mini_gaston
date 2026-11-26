@@ -20,8 +20,23 @@ class ChatsController < ApplicationController
   end
 
   def destroy
-    @chat = current_user.chats.find(params[:id])
-    @chat.destroy
-    redirect_to chats_path, notice: "Conversation supprimée.", status: :see_other
+    chat = current_user.chats.find(params[:id])
+    chat.destroy
+
+    # Suppression depuis la page liste : on reste sur la liste
+    if params[:current_chat_id].blank?
+      return redirect_to chats_path, notice: "Conversation supprimée.", status: :see_other
+    end
+
+    # La conversation qu'on regardait, sinon la plus récente qui reste
+    current = current_user.chats.find_by(id: params[:current_chat_id])
+    current ||= current_user.chats.order(created_at: :desc).first
+
+    if current
+      redirect_to chat_path(current, history: "open"),
+                  notice: "Conversation supprimée.", status: :see_other
+    else
+      redirect_to chats_path, notice: "Conversation supprimée.", status: :see_other
+    end
   end
 end

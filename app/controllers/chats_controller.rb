@@ -15,6 +15,13 @@ class ChatsController < ApplicationController
 
   def show
     @chat = current_user.chats.find(params[:id])
+    @chats = current_user.chats.order(created_at: :desc)
     @message = Message.new
+  end
+
+  def destroy
+    @chat = current_user.chats.find(params[:id])
+    @chat.destroy
+    redirect_to chats_path, notice: "Conversation supprimée.", status: :see_other
   end
 end

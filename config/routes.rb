@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
 
-  resources :chats, only: [:index, :show, :create] do #GET /chats/:id
+  resources :chats, only: [:index, :show, :create, :destroy] do #GET /chats/:id
     resources :messages, only: [:create] #POST /chats/:chat_id/messages
     resources :recipes, only: [:create]
   end

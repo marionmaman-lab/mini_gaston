@@ -14,7 +14,6 @@
       </div>
 
       <%= button_to "Nouvelle conversation", chats_path, class: "btn btn-dark btn-sm w-100 mb-3" %>
-
       <% if @chats.any? %>
         <ul class="list-unstyled">
           <% @chats.each do |chat| %>
@@ -32,11 +31,11 @@
           <% end %>
         </ul>
       <% else %>
-        <p class="text-muted">Pas encore de conversation.</p>
+        <p class="text-muted"> Pas encore de conversation.</p>
       <% end %>
     </div>
 
-       <!-- CONVERSATION (à droite) -->
+       <!-- CONVERSATION (a droite) -->
     <div class="col d-flex flex-column p-4">
       <h1 id="chat_title" class="h4 mb-4"><%= @chat.title %></h1>
 
@@ -51,7 +50,7 @@
         <% end %>
 
         <% @chat.messages.each do |message| %>
-          <%= render "messages/message", message: message %>
+          <%= render "messages/message", message: message, chat: @chat %>
         <% end %>
       </div>
 

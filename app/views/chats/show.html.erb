@@ -1,19 +1,23 @@
 <div class="container-fluid" data-controller="toggle">
   <div class="row" style="min-height: calc(100vh - 70px);">
 
-    <!-- HISTORIQUE (à gauche) -->
-    <div class="col-md-3 border-end p-4" data-toggle-target="hideable">
+    <!-- HISTORIQUE (à gauche, caché au départ) -->
+    <div class="col-md-3 border-end p-4 d-none" data-toggle-target="hideable">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="h3 fw-bold mb-0">
           Historique <i class="fa-solid fa-clock-rotate-left fs-5"></i>
         </h2>
-        <button type="button" class="btn btn-light border btn-sm" title="Fermer"
+
+        <button type="button"
+                class="btn btn-light border btn-sm"
+                title="Fermer l'historique"
                 data-action="click->toggle#call">
           <i class="fa-solid fa-chevron-left"></i>
         </button>
       </div>
 
-      <%= button_to "Nouvelle conversation", chats_path, class: "btn btn-dark btn-sm w-100 mb-3" %>
+      <%= button_to "Nouvelle conversation", chats_path,
+            class: "btn btn-dark btn-sm w-100 mb-3" %>
 
       <% if @chats.any? %>
         <ul class="list-unstyled">
@@ -21,10 +25,16 @@
             <li class="d-flex justify-content-between align-items-center border-bottom py-3">
               <div>
                 <%= link_to chat.title, chat_path(chat),
-                      class: "text-decoration-none #{chat == @chat ? 'fw-bold text-dark' : 'text-dark'}" %>
-                <small class="text-muted ms-1">(il y a <%= time_ago_in_words(chat.created_at) %>)</small>
+                      class: "text-decoration-none text-dark #{'fw-bold' if chat == @chat}" %>
+
+                <small class="text-muted ms-1">
+                  (il y a <%= time_ago_in_words(chat.created_at) %>)
+                </small>
               </div>
-              <%= button_to chat_path(chat), method: :delete, class: "btn btn-link text-dark p-0",
+
+              <%= button_to chat_path(chat),
+                    method: :delete,
+                    class: "btn btn-link text-dark p-0",
                     form: { data: { turbo_confirm: "Supprimer cette conversation ?" } } do %>
                 <i class="fa-solid fa-trash-can"></i>
               <% end %>
@@ -36,10 +46,26 @@
       <% end %>
     </div>
 
-       <!-- CONVERSATION (à droite) -->
+    <!-- CONVERSATION (à droite) -->
     <div class="col d-flex flex-column p-4">
-      <h1 id="chat_title" class="h4 mb-4"><%= @chat.title %></h1>
 
+      <!-- Bouton historique + titre -->
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <button type="button"
+                class="btn btn-light border btn-sm"
+                title="Afficher l'historique"
+                aria-label="Afficher l'historique"
+                data-toggle-target="hideable"
+                data-action="click->toggle#call">
+          <i class="fa-solid fa-clock-rotate-left me-1"></i> Historique
+        </button>
+
+        <h1 id="chat_title" class="h4 mb-0">
+          <%= @chat.title %>
+        </h1>
+      </div>
+
+      <!-- Messages -->
       <div id="messages" class="flex-grow-1">
 
         <% if @chat.messages.empty? %>
@@ -51,22 +77,18 @@
         <% end %>
 
         <% @chat.messages.each do |message| %>
-          <%= render "messages/message", message: message %>
+          <%= render "messages/message", message: message, chat: @chat %>
         <% end %>
+
       </div>
 
-      <!-- Barre de message + livre -->
-      <div class="d-flex align-items-center gap-3 mt-3">
-        <div id="new_message_container" class="flex-grow-1">
+      <!-- Barre de message -->
+      <div class="mt-3">
+        <div id="new_message_container">
           <%= render "messages/form", chat: @chat, message: @message %>
         </div>
-
-        <button type="button" class="btn btn-link text-dark p-0 fs-4" title="Mes conversations"
-                data-action="click->toggle#call">
-          <i class="fa-solid fa-book-open"></i>
-        </button>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>

@@ -37,7 +37,8 @@ class RecipesController < ApplicationController
 
     response = RubyLLM.chat.with_schema(RECIPE_SCHEMA).ask(
       "Extrais la recette de ce texte. Ingrédients séparés par des virgules, " \
-      "étapes numérotées « 1. … », une par ligne.\n\n#{message.content}"
+      "étapes numérotées « 1. … », une par ligne. " \
+      "La durée est un nombre entier de minutes (1 h 30 = 90).\n\n#{message.content}"
     )
     data = response.content
     data = JSON.parse(data) if data.is_a?(String)

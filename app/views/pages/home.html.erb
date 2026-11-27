@@ -62,7 +62,7 @@
               </p>
 
               <div class="recipe-infos">
-                <span>⏱️ <%= recipe.duration_in_minutes %> min</span>
+                <span>⏱️ <%= format_duration(recipe.duration_in_minutes) %></span>
                 <span>👥 <%= recipe.servings %> pers.</span>
               </div>
 

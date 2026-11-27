@@ -9,14 +9,18 @@
   </div>
 <% else %>
   <% has_recipe = message.content.match?(/^[#]{1,3}\s/) %>
-  <div class="d-flex align-items-end gap-2 mb-3">
+    <div id="<%= dom_id(message) %>" class="d-flex align-items-end gap-2 mb-3">
     <div class="rounded-circle bg-light border d-flex align-items-center justify-content-center"
          style="width: 32px; height: 32px; flex-shrink: 0;">
       <i class="fa-solid fa-user fa-xs"></i>
     </div>
     <div style="max-width: 70%;">
       <div class="bg-light px-3 py-2 rounded-3">
-        <%= sanitize(render_markdown(message.content)) %>
+         <% if message.content.blank? %>
+          <span class="text-muted">Mini Gaston écrit…</span>
+        <% else %>
+          <%= sanitize(render_markdown(message.content)) %>
+        <% end %>
          <% if has_recipe %>
           <% if message.chat.recipe %>
             <%= link_to "Voir dans ma bibliothèque", recipe_path(message.chat.recipe) %>

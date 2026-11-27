@@ -19,4 +19,9 @@ class Chat < ApplicationRecord
     response = RubyLLM.chat.with_instructions(TITLE_PROMPT).ask(first_user_message.content)
     update(title: response.content)
   end
+
+  # Titre affiché : "Nouvelle conversation" tant que le vrai titre n'est pas généré
+  def display_title
+    title.blank? || title == DEFAULT_TITLE ? "Nouvelle conversation" : title
+  end
 end

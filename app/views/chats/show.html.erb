@@ -1,3 +1,6 @@
+<%# Le bouton "Retour" s'affiche seulement si on vient d'une autre conversation ou de la liste %>
+<% show_back = (@back_chat && @back_chat != @chat) || params[:from] == "conversations" %>
+
 <div class="chat-page" data-controller="toggle">
 
   <div class="chat-layout">
@@ -12,26 +15,26 @@
           <h2>Historique</h2>
         </div>
 
+        <!-- Croix pour fermer : ne se confond plus avec la flèche "Retour" -->
         <button type="button"
                 class="history-close"
                 title="Fermer l'historique"
                 data-action="click->toggle#call">
-          <i class="fa-solid fa-chevron-left"></i>
+          <i class="fa-solid fa-xmark"></i>
         </button>
-      </div>
-
-      <div class="history-new-chat">
-        <%= button_to "＋ Nouvelle conversation", chats_path,
-              class: "history-new-button" %>
       </div>
 
       <% if @chats.any? %>
         <ul class="history-list">
           <% @chats.each do |chat| %>
-            <li class="history-item">
+            <li class="history-item <%= 'active' if chat == @chat %>">
 
               <div class="history-item-info">
-                <%= link_to chat.title, chat_path(chat),
+                <%= link_to chat.display_title,
+                      chat_path(chat,
+                                history: "open",
+                                from: params[:from],
+                                back_to: (@chat.id unless chat == @chat)),
                       class: "history-item-link #{'active' if chat == @chat}" %>
 
                 <small>
@@ -64,6 +67,17 @@
 
         <div class="chat-topbar-left">
 
+          <!-- Retour : revient à la page précédente, comme la flèche du navigateur -->
+          <% if show_back %>
+            <button type="button"
+                    class="history-open-button"
+                    title="Revenir à la page précédente"
+                    onclick="history.back()">
+              <i class="fa-solid fa-arrow-left"></i>
+              Retour
+            </button>
+          <% end %>
+
           <button type="button"
                   class="history-open-button <%= 'd-none' if params[:history] == 'open' %>"
                   title="Afficher l'historique"
@@ -75,10 +89,20 @@
 
           <div class="chat-title-block">
             <span class="chat-brand">🍃 MINI GASTON</span>
-            <h1><%= @chat.title %></h1>
+            <h1><%= @chat.display_title %></h1>
           </div>
 
         </div>
+
+        <!-- Nouvelle conversation : mémorise d'où l'on vient pour le "Retour" -->
+        <%= button_to chats_path,
+              params: { back_to: (@chat.id if @chat.messages.any?), from: params[:from] }.compact,
+              class: "history-open-button",
+              title: "Nouvelle conversation",
+              form_class: "chat-topbar-right" do %>
+          <i class="fa-solid fa-plus"></i>
+          Nouvelle conversation
+        <% end %>
 
       </header>
 

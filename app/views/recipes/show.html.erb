@@ -1,34 +1,29 @@
 
 <div class="recipe-detail-page">
 
-  <!-- NAVIGATION -->
-  <div class="recipe-back">
-    <%= link_to root_path, class: "recipe-back-link" do %>
-      <span>←</span> Toutes les recettes
-    <% end %>
-  </div>
-
   <!-- HERO -->
   <section class="recipe-detail-hero">
 
     <div class="detail-hero-content">
+        <!-- NAVIGATION -->
+      <div class="recipe-back">
+        <%= link_to root_path, class: "recipe-back-link" do %>
+          <span>←</span> Toutes les recettes
+        <% end %>
+      </div>
+
       <span class="detail-label">
         🍃 MINI GASTON · LE PLAISIR DE CUISINER
       </span>
 
       <h1><%= @recipe.title %></h1>
 
-      <p class="detail-intro">
-        Une recette gourmande, de bons ingrédients
-        et un moment de plaisir à partager.
-      </p>
-
       <div class="detail-badges">
         <div class="detail-badge">
           <span>⏱️</span>
           <div>
             <small>Préparation</small>
-            <strong><%= @recipe.duration_in_minutes %> min</strong>
+          <strong><%= format_duration(@recipe.duration_in_minutes) %></strong>
           </div>
         </div>
 
@@ -58,10 +53,6 @@
   </section>
 
   <!-- INTRODUCTION -->
-  <div class="recipe-welcome">
-    <span>👨‍🍳</span>
-    <p>Enfilez votre tablier, c'est parti !</p>
-  </div>
 
   <!-- CONTENU -->
   <div class="recipe-detail-content">
@@ -78,13 +69,11 @@
         </div>
       </div>
 
-      <p class="detail-card-description">
-        Voici tout ce dont vous avez besoin.
-      </p>
-
-      <div class="detail-text ingredients-text">
-        <%= simple_format(@recipe.ingredients) %>
-      </div>
+      <ul class="ingredients-list">
+        <% @recipe.ingredients.to_s.split(/,|\n/).map(&:strip).reject(&:blank?).each do |ingredient| %>
+          <li><%= ingredient %></li>
+        <% end %>
+      </ul>
 
     </section>
 
@@ -100,16 +89,20 @@
         </div>
       </div>
 
-      <p class="detail-card-description">
-        Suivez les étapes et régalez-vous !
-      </p>
-
-      <div class="detail-text preparation-text">
-        <%= simple_format(@recipe.steps) %>
-      </div>
+      <ol class="steps-list">
+        <% @recipe.steps.to_s.lines.map(&:strip).reject(&:blank?).each do |step| %>
+          <li><%= step.sub(/\A\d+[.)]\s*/, "") %></li>
+        <% end %>
+      </ol>
 
     </section>
 
+  </div>
+
+  <!-- INTRODUCTION -->
+  <div class="recipe-welcome">
+    <span>👨‍🍳</span>
+    <p>Enfilez votre tablier, c'est parti !</p>
   </div>
 
   <!-- FOOTER -->

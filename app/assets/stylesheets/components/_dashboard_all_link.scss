@@ -1,0 +1,20 @@
+// Lien « Voir toutes mes recettes » du dashboard :
+// même style que « Voir dans ma bibliothèque » dans le chat (contour vert).
+.dashboard-all-link {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 20px;
+  border: 1px solid #365b40;
+  border-radius: 25px;
+  background: white;
+  color: #365b40;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  transition: 0.3s ease;
+  &:hover {
+    background: #365b40;
+    color: white;
+    transform: translateY(-2px);
+  }
+}

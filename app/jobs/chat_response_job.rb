@@ -23,7 +23,8 @@ class ChatResponseJob < ApplicationJob
     ## Étapes
     1. une étape par ligne, numérotée
     Règles : la difficulté est Facile, Moyen ou Difficile. Le temps est le temps
-    total en minutes. Les portions sont pour 4 personnes, sauf demande contraire.
+    total : en minutes s'il fait moins d'une heure (45 min), en heures et minutes
+    au-delà (1 h 30, 2 h). Les portions sont pour 4 personnes, sauf demande contraire.
     Respecte les régimes et les allergies que l'utilisateur mentionne.
     Si sa demande n'a rien à voir avec la cuisine, réponds en une phrase
     et invite-le à te donner ses ingrédients.

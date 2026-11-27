@@ -1,13 +1,16 @@
 class ChatsController < ApplicationController
   def index
-    @chats = current_user.chats.order(created_at: :desc)
+    @chats = chats_with_messages
   end
 
   def create
-    @chat = Chat.new(title: Chat::DEFAULT_TITLE, user: current_user)
+    # Réutilise une conversation vide si elle existe, sinon en crée une
+    @chat = current_user.chats.where.missing(:messages).first ||
+            Chat.new(title: Chat::DEFAULT_TITLE, user: current_user)
 
-    if @chat.save
-      redirect_to chat_path(@chat)
+    if @chat.persisted? || @chat.save
+      # On transmet d'où l'on vient pour afficher le bouton "Retour"
+      redirect_to chat_path(@chat, back_to: params[:back_to], from: params[:from])
     else
       redirect_to chats_path, alert: "Impossible de créer la conversation."
     end
@@ -15,8 +18,10 @@ class ChatsController < ApplicationController
 
   def show
     @chat = current_user.chats.find(params[:id])
-    @chats = current_user.chats.order(created_at: :desc)
+    @chats = chats_with_messages
     @message = Message.new
+    # Conversation de départ (si on vient d'une autre conversation)
+    @back_chat = current_user.chats.find_by(id: params[:back_to])
   end
 
   def destroy
@@ -28,9 +33,9 @@ class ChatsController < ApplicationController
       return redirect_to chats_path, notice: "Conversation supprimée.", status: :see_other
     end
 
-    # La conversation qu'on regardait, sinon la plus récente qui reste
+    # La conversation qu'on regardait, sinon la plus récente qui a des messages
     current = current_user.chats.find_by(id: params[:current_chat_id])
-    current ||= current_user.chats.order(created_at: :desc).first
+    current ||= chats_with_messages.first
 
     if current
       redirect_to chat_path(current, history: "open"),
@@ -38,5 +43,12 @@ class ChatsController < ApplicationController
     else
       redirect_to chats_path, notice: "Conversation supprimée.", status: :see_other
     end
+  end
+
+  private
+
+  # Seulement les conversations qui ont au moins un message
+  def chats_with_messages
+    current_user.chats.where.associated(:messages).distinct.order(created_at: :desc)
   end
 end

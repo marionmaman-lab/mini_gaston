@@ -20,6 +20,7 @@
       <%= button_to "＋ Nouvelle conversation",
           chats_path,
           method: :post,
+          params: { from: "conversations" },
           class: "conversations-new-button" %>
     </section>
 
@@ -27,12 +28,11 @@
       <div class="conversations-list">
 
         <% @chats.each do |chat| %>
-          <%= link_to chat_path(chat), class: "conversation-card" do %>
-
+          <%= link_to chat_path(chat, from: "conversations"), class: "conversation-card" do %>
             <div class="conversation-icon">💬</div>
 
             <div class="conversation-info">
-              <h3><%= chat.title %></h3>
+              <h3><%= chat.display_title %></h3>
               <p>Ouvrir la conversation</p>
             </div>
 

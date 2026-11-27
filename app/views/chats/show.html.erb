@@ -87,7 +87,7 @@
       <!-- CONTENEUR DES MESSAGES -->
       <section class="chat-container">
 
-        <div id="messages" class="chat-messages">
+        <div id="messages" class="chat-messages" data-controller="scroll">
 
           <% if @chat.messages.empty? %>
             <div class="chat-welcome">

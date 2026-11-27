@@ -2,19 +2,20 @@
 /* ==========================================
    MINI GASTON - STRUCTURE DU CHAT
 ========================================== */
-
 .chat-page {
   width: 100%;
-  height: calc(100vh - 85px);
-  height: calc(100dvh - 85px);
+  height: 100vh;
+  height: 100dvh;
   min-height: 0;
+
   background: #f8f7f2;
   color: #263b2d;
+
   padding: 15px 35px;
+
   overflow: hidden;
   box-sizing: border-box;
 }
-
 .chat-layout {
   display: flex;
   gap: 24px;

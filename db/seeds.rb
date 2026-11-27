@@ -94,7 +94,7 @@ Recipe.create!(
   TEXT
   duration_in_minutes: 25,
   difficulty: "Moyen",
-  servings: 4
+  servings: 2
 )
 
 Recipe.create!(
@@ -113,7 +113,7 @@ Recipe.create!(
   TEXT
   duration_in_minutes: 40,
   difficulty: "Facile",
-  servings: 4
+  servings: 3
 )
 
 Recipe.create!(

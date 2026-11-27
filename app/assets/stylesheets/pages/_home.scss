@@ -1,1 +1,21 @@
+.hero-decoration {
+  .hero-circle {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    overflow: visible;
+  }
+
+  .hero-logo {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    transform: scale(2.3);
+  }
+
+  span {
+    z-index: 2;
+  }
+}
+
 // Specific CSS for your home-page

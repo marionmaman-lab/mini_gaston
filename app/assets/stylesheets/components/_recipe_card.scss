@@ -1,0 +1,83 @@
+/* =================================
+  5. CARTE INDIVIDUELLE
+ ================================= */
+.recipe-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #eeeee8;
+  box-shadow: 0 5px 20px rgba(38, 59, 45, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeUp 0.7s ease both;
+}
+.recipe-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.recipe-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.recipe-card:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.recipe-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(38, 59, 45, 0.12);
+}
+.recipe-card-top {
+  height: 145px;
+  background: linear-gradient(135deg, #e8eee3, #f5e9d9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+}
+.recipe-emoji {
+  font-size: 65px;
+  transition: transform 0.3s ease;
+}
+.recipe-card:hover .recipe-emoji {
+  transform: scale(1.15) rotate(-8deg);
+}
+.difficulty-badge {
+  background: white;
+  color: #64815e;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.recipe-card-content {
+  padding: 22px;
+}
+.recipe-card-content h3 {
+  font-size: 21px;
+  font-weight: 750;
+  color: #263b2d;
+  margin-bottom: 12px;
+}
+.recipe-description {
+  color: #849087;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 45px;
+}
+.recipe-infos {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  color: #68766a;
+  font-size: 13px;
+  font-weight: 600;
+}
+.recipe-link {
+  display: block;
+  text-decoration: none;
+  color: #365b40;
+  font-weight: 700;
+  border-top: 1px solid #eeeeea;
+  padding-top: 17px;
+  transition: color 0.2s ease;
+}
+.recipe-link:hover {
+  color: #e28b51;
+}

@@ -38,7 +38,7 @@
             <h3><%= recipe.title %></h3>
 
             <p>
-              ⏱️ <%= recipe.duration_in_minutes %> min
+              ⏱️ <%= format_duration(recipe.duration_in_minutes) %>
               · 👥 <%= recipe.servings %> personnes
             </p>
 

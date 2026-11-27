@@ -1,3 +1,4 @@
+
 <div class="conversations-page">
 
   <header class="conversations-header">
@@ -25,6 +26,7 @@
 
     <% if @chats.any? %>
       <div class="conversations-list">
+
         <% @chats.each do |chat| %>
           <%= link_to chat_path(chat, from: "conversations"), class: "conversation-card" do %>
             <div class="conversation-icon">💬</div>
@@ -35,15 +37,19 @@
             </div>
 
             <span class="conversation-arrow">→</span>
+
           <% end %>
         <% end %>
+
       </div>
     <% else %>
+
       <div class="conversations-empty">
         <span>🥕</span>
         <h3>Pas encore de conversation</h3>
         <p>Lancez votre première discussion avec Mini Gaston !</p>
       </div>
+
     <% end %>
 
   </main>

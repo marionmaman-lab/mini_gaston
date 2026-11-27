@@ -1,11 +1,14 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <title><%= content_for(:title) || "Mini Gaston" %></title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Mini Gaston">
     <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -20,16 +23,35 @@
   </head>
 
   <body>
-    <%= link_to "Skip to main content", "#main-content", class: "visually-hidden-focusable" %>
 
-    <header>
-      <%= render "shared/navbar" %>
-    </header>
+    <%= link_to "Skip to main content",
+        "#main-content",
+        class: "visually-hidden-focusable" %>
+
+    <% hide_navbar = devise_controller? &&
+        ["sessions", "registrations"].include?(controller_name) &&
+        ["new", "create"].include?(action_name) %>
+
+    <!-- NAVBAR LATERALE -->
+
+    <% unless hide_navbar %>
+      <header>
+        <%= render "shared/navbar" %>
+      </header>
+    <% end %>
+
+    <!-- MESSAGES FLASH -->
 
     <%= render "shared/flashes" %>
 
-    <main id="main-content">
+    <!-- CONTENU PRINCIPAL -->
+
+    <main id="main-content"
+          class="<%= 'app-content' unless hide_navbar %>">
+
       <%= yield %>
+
     </main>
+
   </body>
 </html>

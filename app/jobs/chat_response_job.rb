@@ -40,7 +40,7 @@ class ChatResponseJob < ApplicationJob
     content = ""
     last_broadcast = Time.current
     llm.with_instructions(instructions_for(chat.user)).ask(user_message.content) do |chunk|
-      next if chunk.content.blank?
+      next if chunk.content.nil?
       content += chunk.content
       if Time.current - last_broadcast > 0.1
         assistant_message.update!(content: content)

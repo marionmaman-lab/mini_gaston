@@ -1,0 +1,109 @@
+// Réponse de Mini Gaston dans le chat : le Markdown aux couleurs de la charte.
+// Les classes Bootstrap de la bulle (bg-light, px-3, py-2, rounded-3) sont en
+// !important : il faut donc !important ici pour les remplacer.
+.chat-messages .bg-light.rounded-3 {
+  background-color: #f8f7f2 !important;
+  border-radius: 20px !important;
+  padding: 18px 24px !important;
+  color: #68766a;
+  font-size: 15px;
+  line-height: 1.8;
+  // Titre de la recette
+  h1 {
+    font-family: $headers-font;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.3;
+    color: #263b2d;
+    margin: 0 0 10px;
+  }
+  // Ligne « Temps · Difficulté · Portions » juste sous le titre
+  h1 + p {
+    display: inline-block;
+    background: #e8eee3;
+    color: #365b40;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  // Ingrédients, Étapes
+  h2,
+  h3 {
+    font-family: $headers-font;
+    font-size: 18px;
+    font-weight: 800;
+    color: #365b40;
+    margin: 20px 0 8px;
+  }
+  p {
+    margin-bottom: 10px;
+  }
+  strong {
+    color: #263b2d;
+    font-weight: 700;
+  }
+  ul,
+  ol {
+    padding-left: 22px;
+    margin-bottom: 10px;
+  }
+  li {
+    margin-bottom: 6px;
+    padding-left: 4px;
+    &::marker {
+      color: #64815e;
+      font-weight: 700;
+    }
+  }
+  a {
+    color: #365b40;
+    font-weight: 600;
+    &:hover {
+      color: #e28b51;
+    }
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+ // Boutons sous la recette : « Enregistrer » (plein) et « Voir » (contour)
+  form.button_to {
+    margin-top: 16px;
+  }
+  .btn {
+    background: #365b40;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 14px;
+    padding: 12px 20px;
+    margin-top: 0 !important;
+    transition: 0.3s ease;
+    &:hover {
+      background: #e28b51;
+      color: white;
+      transform: translateY(-2px);
+    }
+  }
+  > a {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 20px;
+    border: 1px solid #365b40;
+    border-radius: 25px;
+    background: white;
+    color: #365b40;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: 0.3s ease;
+    &:hover {
+      background: #365b40;
+      color: white;
+      transform: translateY(-2px);
+    }
+  }
+

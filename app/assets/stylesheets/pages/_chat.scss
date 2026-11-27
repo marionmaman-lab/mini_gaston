@@ -628,3 +628,39 @@
     height: 48px;
   }
 }
+
+
+/* ==========================================
+   LOGO MINI GASTON - FILIGRANE CHAT
+========================================== */
+
+.chat-container {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background-image: image-url("logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 250px auto;
+
+    opacity: 0.1;
+
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+/* RESPONSIVE - MOBILE */
+
+@media (max-width: 576px) {
+  .chat-container::before {
+    background-size: 180px auto;
+  }
+}

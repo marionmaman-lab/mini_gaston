@@ -1,0 +1,88 @@
+
+
+.recipes-page {
+  background-color: #f8f7f2;
+  min-height: 100vh;
+  color: #263b2d;
+  padding-bottom: 70px;
+  font-family: inherit;
+}
+
+/* =================================
+  3. SECTION DES RECETTES
+ ================================= */
+.recipe-section {
+  max-width: 1200px;
+  margin: 65px auto;
+  padding: 0 25px;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+.section-heading h2 {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 10px 0;
+  color: #263b2d;
+}
+.section-heading p {
+  color: #849087;
+}
+.recipe-count {
+  background: #e8eee3;
+  color: #365b40;
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-weight: 600;
+}
+/* =================================
+  4. GRILLE DES CARTES
+ ================================= */
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* =================================
+  6. AUCUNE RECETTE
+ ================================= */
+.empty-recipes {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 20px;
+}
+.empty-recipes span {
+  font-size: 55px;
+}
+.empty-recipes h3 {
+  margin: 15px 0;
+}
+
+/* ==========================================
+  8. RESPONSIVE RECETTES
+ ========================================== */
+@media (max-width: 768px) {
+  .recipes-hero {
+    padding: 45px 25px;
+    min-height: auto;
+  }
+  .hero-decoration {
+    display: none;
+  }
+  .recipes-grid {
+    grid-template-columns: 1fr;
+  }
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .section-heading h2 {
+    font-size: 26px;
+  }
+}

@@ -10,3 +10,77 @@
 .navbar-lewagon .navbar-brand img {
   width: 40px;
 }
+
+/* ==========================================
+  NAVBAR - MINI GASTON
+ ========================================== */
+.navbar-lewagon {
+  background: #ffffff;
+  min-height: 85px;
+  padding: 12px 25px;
+  .navbar-brand img {
+    width: 40px;
+  }
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .navbar-custom-link,
+  .navbar-login-button {
+    display: inline-block;
+    background: #365b40;
+    color: #ffffff !important;
+    text-decoration: none;
+    padding: 18px 55px;
+    min-width: 220px;
+    text-align: center;
+    margin: 0;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 400 !important;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    &:hover {
+      background: #365b40;
+      color: #ffffff !important;
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+  }
+  .navbar-profile {
+    margin-left: 18px;
+  }
+  .avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .dropdown-menu {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(38, 59, 45, 0.10);
+  }
+}
+
+/* ==========================================
+  RESPONSIVE NAVBAR
+ ========================================== */
+@media (max-width: 576px) {
+  .navbar-lewagon {
+    .navbar-nav {
+      align-items: flex-start;
+      gap: 12px;
+      padding-top: 15px;
+    }
+    .navbar-custom-link,
+    .navbar-login-button {
+      min-width: 200px;
+      padding: 15px 30px;
+    }
+    .navbar-profile {
+      margin-left: 0;
+    }
+  }
+}
